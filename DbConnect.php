@@ -22,7 +22,11 @@ function register($fname,$lname,$gender,$dob,$religion,$present_address,$parmane
 function login($userName,$password)
 {
     $connection=connection();
-    $sql=$connection->prepare("SELECT")
+    $sql=$connection->prepare("SELECT * FROM users WHERE userName = ? and password = ?");
+    $sql->bind_param("ss",$userName,$password);
+    $sql->execute();
+    $response=$sql->get_result();
+    return $response->num_rows === 1;
 }
  
 
